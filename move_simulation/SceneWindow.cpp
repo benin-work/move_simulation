@@ -7,7 +7,6 @@ namespace move_simulation {
 
 	SceneWindow::SceneWindow()
 		: m_hwnd(nullptr)
-		, m_scene(nullptr)
 	{
 	}
 
@@ -26,7 +25,7 @@ namespace move_simulation {
 			instance,
 			LoadIcon(nullptr, IDI_APPLICATION),
 			LoadCursor(nullptr, IDC_ARROW),
-			nullptr, //HBRUSH(COLOR_WINDOW + 1),
+			HBRUSH(COLOR_WINDOW + 1),
 			nullptr,
 			class_name,
 			LoadIcon(nullptr, IDI_APPLICATION) };
@@ -53,7 +52,7 @@ namespace move_simulation {
 		ShowWindow(m_hwnd, SW_NORMAL);
 	}
 
-	void SceneWindow::set_scene(Scene* scene)
+	void SceneWindow::set_scene(const std::shared_ptr<Scene> scene)
 	{
 		m_scene = scene;
 	}
@@ -65,13 +64,13 @@ namespace move_simulation {
 		int win_width = client_rect.right - client_rect.left;
 		int win_height = client_rect.bottom + client_rect.top;
 
-		HDC memhdc;
-		HDC hdc;
-		HBITMAP membitmap;
-		hdc = GetDC(hwnd());
-		memhdc = CreateCompatibleDC(hdc);
-		membitmap = CreateCompatibleBitmap(hdc, win_width, win_height);
+		HDC hdc = GetDC(hwnd());
+		HDC memhdc = CreateCompatibleDC(hdc);
+		HBITMAP membitmap = CreateCompatibleBitmap(hdc, win_width, win_height);
 		HBITMAP moldbmp = (HBITMAP)SelectObject(memhdc, membitmap);
+
+		// Clear background
+		//FillRect(memhdc, &client_rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
 		// Main drawing
 		draw_scene(memhdc);
@@ -92,7 +91,7 @@ namespace move_simulation {
 
 	void SceneWindow::draw_scene(HDC hdc) const
 	{
-		if (m_scene == nullptr)
+		if (!m_scene)
 			return;
 		
 		m_scene->draw(hdc);
@@ -108,29 +107,32 @@ namespace move_simulation {
 		switch (msg)
 		{
 		case WM_CLOSE:
-			logger() << Logger::Info << "Close window: " << hwnd;
+			logger() << Logger::Info << "Close window: " << hwnd << std::endl;
 			DestroyWindow(hwnd);
 			return 0L;
 
 		case WM_DESTROY:
-			logger() << Logger::Info << "Destroing window: " << hwnd;
+			logger() << Logger::Info << "Destroing window: " << hwnd << std::endl;
 			PostQuitMessage(0);
 			return 0L;
 
 		case WM_LBUTTONDOWN:
-			logger() << Logger::Info << "\nMouse left button down (" << LOWORD(lparam)
-				<< ',' << HIWORD(lparam) << ")\n";
+			logger() << Logger::Info << "Mouse left button down (" << LOWORD(lparam)
+				<< ',' << HIWORD(lparam) << ")" << std::endl;
+			break;
+
+		case WM_LBUTTONUP:
+			logger() << Logger::Info << "Mouse left button up (" << LOWORD(lparam)
+				<< ',' << HIWORD(lparam) << ")" << std::endl;
+			break;
 
 		case WM_PAINT:
-		{
-			PAINTSTRUCT ps;	
-			BeginPaint(hwnd, &ps);
-			EndPaint(hwnd, &ps);
-			return 0L;
-		}
-
-		default:
-			logger() << Logger::Info << '.';
+			{
+				PAINTSTRUCT ps;	
+				BeginPaint(hwnd, &ps);
+				EndPaint(hwnd, &ps);
+				return 0L;
+			}
 		}
 
 		return DefWindowProc(hwnd, msg, wparam, lparam);

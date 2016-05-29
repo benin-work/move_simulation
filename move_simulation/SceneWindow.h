@@ -13,7 +13,7 @@ namespace move_simulation {
 		void create(HINSTANCE instance = GetModuleHandle(nullptr));
 		void show() const;
 
-		void set_scene(Scene* scene);
+		void set_scene(const std::shared_ptr<Scene> scene);
 
 		void draw() const;
 		
@@ -27,7 +27,7 @@ namespace move_simulation {
 
 	private:
 		HWND m_hwnd;
-		Scene* m_scene;
+		std::shared_ptr<Scene> m_scene;
 	};
 
 } // namespace move_simulation

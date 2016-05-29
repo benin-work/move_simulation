@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
+#include "PhysSceneObject.h"
 
 namespace move_simulation {
 
@@ -13,16 +14,31 @@ namespace move_simulation {
 
 	void Scene::draw(HDC hdc)
 	{
-		HPEN redpen = (HPEN)CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-		HPEN oldpen = (HPEN)SelectObject(hdc, redpen);
+		// Get window rect
+		BITMAP bitmap_header;
+		memset(&bitmap_header, 0, sizeof(BITMAP));
+		HGDIOBJ bitmap_obj = GetCurrentObject(hdc, OBJ_BITMAP);
+		GetObject(bitmap_obj, sizeof(BITMAP), &bitmap_header);
+		RECT win_rect{0, 0, bitmap_header.bmWidth, bitmap_header.bmHeight};
+		
+		// Clear background of scene
+		FillRect(hdc, &win_rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-		Ellipse(hdc, 30, 30, 120, 90);
-		RoundRect(hdc, 150, 30, 240, 90, 15, 20);
-		Chord(hdc, 270, 30, 360, 90, 270, 45, 360, 45);
-		Rectangle(hdc, 150, 110, 230, 160);
+		// Draw objects
+		for each (const auto& obj in m_objects)
+		{
+			obj->draw(hdc);
+		}
+	}
 
-		redpen = (HPEN)SelectObject(hdc, oldpen);
-		DeleteObject(redpen);
+	void Scene::add_object(const SceneObjectPtr new_object)
+	{
+		m_objects.push_back(new_object);
+	}
+
+	Scene::ObjectsList& Scene::objects()
+	{
+		return m_objects;
 	}
 
 } //namespace move_simulation
