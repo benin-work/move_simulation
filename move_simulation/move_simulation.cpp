@@ -19,6 +19,7 @@ int main()
 
 	logger() << Logger::Info << "Create Scene" << std::endl;
 	auto main_scene = std::make_shared<Scene>();
+	main_scene->set_bounds(Vector(-1000, -1000), Vector(1000, 1000));
 	
 	logger() << Logger::Info << "Create World" << std::endl;
 	auto world = std::make_shared<World>();
@@ -28,7 +29,7 @@ int main()
 	main_scene->add_object(std::make_shared<BallSceneObject>(Vector(100.0, 100.0)));
 	
 	auto test_ball = std::make_shared<BallSceneObject>(Vector(150.0, 200.0));
-	test_ball->set_vel(Vector(500, -500));
+	test_ball->set_vel(Vector(50, 50));
 	main_scene->add_object(test_ball);
 	
 	main_scene->add_object(std::make_shared<BallSceneObject>(Vector(300.0, 400.0)));

@@ -143,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="BaseSceneObject.h" />
     <ClInclude Include="graph_objects.h" />
+    <ClInclude Include="MathTypes.h" />
     <ClInclude Include="PhysSceneObject.h" />
     <ClInclude Include="types.h" />
     <ClInclude Include="ISimulator.h" />

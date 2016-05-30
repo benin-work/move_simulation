@@ -24,15 +24,25 @@ namespace move_simulation {
 		HBRUSH obj_brush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
 		HBRUSH old_brush = (HBRUSH)SelectObject(hdc, obj_brush);
 
-		const double drad = 10.0;
+		const double rad = 15.0;
 		Ellipse(hdc, 
-			static_cast<int>(pos().x - drad), 
-			static_cast<int>(pos().y - drad),
-			static_cast<int>(pos().x + drad),
-			static_cast<int>(pos().y + drad));
+			static_cast<int>(pos().x() - rad), 
+			static_cast<int>(pos().y() - rad),
+			static_cast<int>(pos().x() + rad),
+			static_cast<int>(pos().y() + rad));
 		
-		obj_pen = (HPEN)SelectObject(hdc, old_pen);
-		obj_brush = (HBRUSH)SelectObject(hdc, old_brush);
+
+		SelectObject(hdc, (HBRUSH)GetStockObject(WHITE_BRUSH));
+
+		Ellipse(hdc,
+			static_cast<int>(pos().x()),
+			static_cast<int>(pos().y()),
+			static_cast<int>(pos().x() + rad * 2 / 3),
+			static_cast<int>(pos().y() + rad * 2 / 3));
+
+		SelectObject(hdc, old_pen);
+		SelectObject(hdc, old_brush);
+
 		DeleteObject(obj_pen);
 		DeleteObject(obj_brush);
 	}

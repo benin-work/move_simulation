@@ -3,6 +3,7 @@
 namespace move_simulation {
 
 	class Scene;
+	class PhysSceneObject;
 
 	class SceneWindow
 	{
@@ -20,7 +21,9 @@ namespace move_simulation {
 		HWND hwnd() const;
 
 	private:
-		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+		// Forward static method 
+		static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+		LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 		void draw_scene(HDC hdc) const;
 		void draw_sysinfo(HDC hdc) const;
@@ -28,6 +31,8 @@ namespace move_simulation {
 	private:
 		HWND m_hwnd;
 		std::shared_ptr<Scene> m_scene;
+
+		std::shared_ptr<PhysSceneObject> m_active_object;
 	};
 
 } // namespace move_simulation

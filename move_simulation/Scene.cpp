@@ -12,23 +12,42 @@ namespace move_simulation {
 	{
 	}
 
+	void Scene::set_bounds(Vector top_left, Vector bottom_down)
+	{
+		m_bound_top_left = top_left;
+		m_bound_bottom_right = bottom_down;
+	}
+
+	void Scene::update(const double dt)
+	{
+		if (m_bound_top_left != m_bound_bottom_right)
+		{
+			// Simple test for bounds
+			for (auto it = m_objects.begin(); it != m_objects.end();)
+			{
+				const auto& obj = *it;
+				if (obj->pos().x() < m_bound_top_left.x() || obj->pos().x() > m_bound_bottom_right.x() || 
+					obj->pos().y() < m_bound_top_left.y() || obj->pos().y() > m_bound_bottom_right.y())
+				{
+					it = m_objects.erase(it);
+				}
+				else
+				{
+					++it;
+				}
+			}
+		}
+	}
+
 	void Scene::draw(HDC hdc)
 	{
-		// Get window rect
-		BITMAP bitmap_header;
-		memset(&bitmap_header, 0, sizeof(BITMAP));
-		HGDIOBJ bitmap_obj = GetCurrentObject(hdc, OBJ_BITMAP);
-		GetObject(bitmap_obj, sizeof(BITMAP), &bitmap_header);
-		RECT win_rect{0, 0, bitmap_header.bmWidth, bitmap_header.bmHeight};
-		
-		// Clear background of scene
-		FillRect(hdc, &win_rect, (HBRUSH)GetStockObject(WHITE_BRUSH));
-
 		// Draw objects
-		for each (const auto& obj in m_objects)
+		for (const auto& obj : m_objects)
 		{
 			obj->draw(hdc);
 		}
+
+		draw_sysinfo(hdc);
 	}
 
 	void Scene::add_object(const SceneObjectPtr new_object)
@@ -36,9 +55,17 @@ namespace move_simulation {
 		m_objects.push_back(new_object);
 	}
 
+	void Scene::remove_object(const SceneObjectPtr object)
+	{
+
+	}
+
 	Scene::ObjectsList& Scene::objects()
 	{
 		return m_objects;
 	}
 
+	void Scene::draw_sysinfo(HDC hdc)
+	{		 
+	}
 } //namespace move_simulation

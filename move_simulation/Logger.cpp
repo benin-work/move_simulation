@@ -3,7 +3,7 @@
 
 namespace
 {
-	std::string level2string(const Logger::LogLevel level)
+	const char* level2string(const Logger::LogLevel level)
 	{
 		switch (level)
 		{
@@ -42,6 +42,7 @@ Logger& Logger::operator<<(const LogLevel& level)
 	{
 		auto c_now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 		*m_out << "[" << std::put_time(std::localtime(&c_now), "%F %T") << "] ";
+		*m_out << level2string(level) << ": ";
 	}
 
 	return *this;

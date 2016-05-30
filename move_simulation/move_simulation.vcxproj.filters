@@ -36,9 +36,6 @@
     <ClInclude Include="World.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ISimulator.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="PhysSimulator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -52,6 +49,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="graph_objects.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISimulator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MathTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

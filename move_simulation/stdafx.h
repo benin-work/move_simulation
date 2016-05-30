@@ -15,6 +15,7 @@
 #include <map>
 #include <memory>
 #include <vector>
+#include <sstream>
 
 #include <iomanip>
 #include <chrono>

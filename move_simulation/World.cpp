@@ -36,6 +36,7 @@ namespace move_simulation {
 
 		for each (const auto& scene in m_scenes)
 		{	
+			scene->update(dt);
 			m_simulator->simulate(scene, dt);
 		}
 	}

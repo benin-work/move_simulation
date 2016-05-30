@@ -17,17 +17,10 @@ namespace move_simulation {
 	{
 		for each (const auto& obj in scene->objects())
 		{
-			obj->set_accel(Vector(obj->accel().x, 1000));
+			obj->set_accel(Vector(obj->accel().x(), -981));
 
-			Vector new_vel(
-				obj->vel().x + obj->accel().x * dt,
-				obj->vel().y + obj->accel().y * dt);
-			obj->set_vel(new_vel);
-
-			Vector new_pos(
-				obj->pos().x + obj->vel().x * dt,
-				obj->pos().y + obj->vel().y * dt);
-			obj->set_pos(new_pos);
+			obj->set_vel(obj->vel() + obj->accel() * dt);
+			obj->set_pos(obj->pos() + obj->vel() * dt);
 		}
 	}
 
