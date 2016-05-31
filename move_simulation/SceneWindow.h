@@ -3,7 +3,7 @@
 namespace move_simulation {
 
 	class Scene;
-	class PhysSceneObject;
+	class GraphSceneObject;
 
 	class SceneWindow
 	{
@@ -32,7 +32,7 @@ namespace move_simulation {
 		HWND m_hwnd;
 		std::shared_ptr<Scene> m_scene;
 
-		std::shared_ptr<PhysSceneObject> m_active_object;
+		std::shared_ptr<GraphSceneObject> m_active_object;
 	};
 
 } // namespace move_simulation

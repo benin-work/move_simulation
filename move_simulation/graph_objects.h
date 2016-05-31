@@ -1,16 +1,13 @@
 #pragma once
-#include "PhysSceneObject.h"
+#include "GraphSceneObject.h"
 
 namespace move_simulation {
 
-	class BallSceneObject: public PhysSceneObject
+	class BallSceneObject: public GraphSceneObject
 	{
 	public:
-		BallSceneObject();
-		explicit BallSceneObject(const Vector pos, const Vector dir = Vector(1.));
-		virtual ~BallSceneObject();
-
+		BallSceneObject(const Vector& pos = Vector(0));
 		void draw(HDC hdc) const override;
 	};
 
-} // 
+} //  namespace move_simulation

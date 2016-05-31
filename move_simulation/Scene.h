@@ -2,12 +2,12 @@
 
 namespace move_simulation {
 
-	class PhysSceneObject;
+	class GraphSceneObject;
 
 	class Scene
 	{
 	public:
-		typedef std::shared_ptr<PhysSceneObject> SceneObjectPtr;
+		typedef std::shared_ptr<GraphSceneObject> SceneObjectPtr;
 		typedef std::vector<SceneObjectPtr> ObjectsList;
 
 	public:

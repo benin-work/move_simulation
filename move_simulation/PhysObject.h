@@ -1,14 +1,16 @@
 #pragma once
-#include "BaseSceneObject.h"
 
 namespace move_simulation {
 
-	class PhysSceneObject : public BaseSceneObject
+	class PhysObject
 	{
 	public:
-		PhysSceneObject();
-		explicit PhysSceneObject(const Vector pos, const Vector dir);
-		virtual ~PhysSceneObject();
+		PhysObject();
+		PhysObject(const Vector& pos);
+		virtual ~PhysObject();
+
+		const Vector& pos() const;
+		void set_pos(const Vector& new_pos);
 
 		double mass() const;
 		void set_mass(const double new_mass);
@@ -20,6 +22,8 @@ namespace move_simulation {
 		void set_accel(const Vector& new_accel);
 
 	private:
+		Vector m_pos;
+		double m_angle;
 		double m_mass;
 		Vector m_vel;
 		Vector m_accel;

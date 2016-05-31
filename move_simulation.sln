@@ -5,22 +5,38 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "move_simulation", "move_simulation\move_simulation.vcxproj", "{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "phys_simulator_lib", "phys_simulator_lib\phys_simulator_lib.vcxproj", "{4D8A6524-3353-4981-93D5-9A539563B221}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|ARM = Release|ARM
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Debug|ARM.ActiveCfg = Debug|Win32
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Debug|x64.ActiveCfg = Debug|x64
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Debug|x64.Build.0 = Debug|x64
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Debug|x86.ActiveCfg = Debug|Win32
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Debug|x86.Build.0 = Debug|Win32
+		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Release|ARM.ActiveCfg = Release|Win32
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Release|x64.ActiveCfg = Release|x64
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Release|x64.Build.0 = Release|x64
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Release|x86.ActiveCfg = Release|Win32
 		{4D4C895B-EB3D-4590-BAC1-DB4634BDB734}.Release|x86.Build.0 = Release|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Debug|ARM.ActiveCfg = Debug|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Debug|x64.ActiveCfg = Debug|x64
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Debug|x64.Build.0 = Debug|x64
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Debug|x86.ActiveCfg = Debug|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Debug|x86.Build.0 = Debug|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Release|ARM.ActiveCfg = Release|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Release|x64.ActiveCfg = Release|x64
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Release|x64.Build.0 = Release|x64
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Release|x86.ActiveCfg = Release|Win32
+		{4D8A6524-3353-4981-93D5-9A539563B221}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

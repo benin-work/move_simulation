@@ -17,6 +17,7 @@ namespace simple_math
 		Vector(const T& x, const T& y);
 
 		Vector& operator=(const Vector& other);
+		Vector& operator=(const T& e);
 
 		T& operator[](size_t index);
 		const T& operator[](size_t index) const;
@@ -76,7 +77,7 @@ namespace simple_math
 	template <size_t M, typename T>
 	Vector<M, T>::Vector(const T& e)
 	{
-		for each (T& component in data)
+		for (T& component: data)
 			component = e;
 	}
 
@@ -93,6 +94,14 @@ namespace simple_math
 	{
 		if (this != &other)
 			memcpy(data, other.data, M * sizeof(T));
+		return *this;
+	}
+
+	template <size_t M, typename T>
+	Vector<M, T>& Vector<M, T>::operator=(const T& e)
+	{
+		for (T& component : data)
+			component = e;
 		return *this;
 	}
 

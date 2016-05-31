@@ -3,16 +3,8 @@
 
 namespace move_simulation {
 
-	BallSceneObject::BallSceneObject()
-	{
-	}
-
-	BallSceneObject::BallSceneObject(const Vector pos, const Vector dir /*= Vector(1.)*/)
-		: PhysSceneObject(pos, dir)
-	{
-	}
-
-	BallSceneObject::~BallSceneObject()
+	BallSceneObject::BallSceneObject(const Vector& pos /* = Vector(0)*/)
+		: GraphSceneObject(pos)
 	{
 	}
 

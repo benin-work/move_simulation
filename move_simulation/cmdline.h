@@ -34,10 +34,7 @@
 #include <string>
 #include <stdexcept>
 #include <typeinfo>
-#include <cstring>
 #include <algorithm>
-//#include <cxxabi.h>
-#include <cstdlib>
 
 namespace cmdline{
 

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Scene.h"
-#include "PhysSceneObject.h"
+#include "graph_objects.h"
 
 namespace move_simulation {
 

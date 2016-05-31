@@ -49,7 +49,7 @@ Logger& Logger::operator<<(const LogLevel& level)
 	if (m_out)
 	{
 		auto c_now = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-		*m_out << "[" << std::put_time(std::localtime(&c_now), "%F %T") << "] ";
+		//*m_out << "[" << std::put_time(std::localtime(&c_now), "%F %T") << "] ";
 		*m_out << level2string(level) << ": ";
 	}
 
