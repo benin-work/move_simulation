@@ -23,6 +23,14 @@ Logger::Logger()
 {
 }
 
+Logger::~Logger()
+{
+	if (m_owner && m_out != nullptr)
+	{
+		delete m_out;
+	}
+}
+
 void Logger::init(LogLevel level, std::ostream* stream, bool owner)
 {
 	m_level = level;
@@ -55,11 +63,7 @@ Logger& Logger::operator<<(std::ostream& (*pf)(std::ostream&))
 	return *this;
 }
 
-Logger::~Logger()
-{
-	if (m_owner)
-		delete m_out;
-}
+
 
 Logger& logger()
 {

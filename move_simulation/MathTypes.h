@@ -54,6 +54,21 @@ namespace simple_math
 		void operator+=(const T other);
 		void operator-=(const T other);
 
+		friend std::ostream& operator<< (std::ostream& os, const Vector& vector)
+		{
+			const std::ios::fmtflags flags = os.flags();
+			const std::streamsize prec = os.precision();
+
+			os.setf(std::ios::right, std::ios::adjustfield);
+			os.precision(3);
+			os << "[";
+			for (size_t index = 0; index < M; ++index)
+				os << vector.at(index) << (index + 1 < M ? ";" : "]");
+			os.precision(prec);
+			os.setf(flags);
+			return os;
+		}
+
 		// Components storage
 		T data[M];
 	};

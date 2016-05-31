@@ -14,7 +14,8 @@ namespace move_simulation {
 
 	void Scene::set_bounds(Vector top_left, Vector bottom_down)
 	{
-		m_bound_top_left = top_left;
+		logger() << Logger::Info << "Set scene bounds [" << top_left << " : " << bottom_down << "]" << std::endl;
+		m_bound_top_left = top_left;															  
 		m_bound_bottom_right = bottom_down;
 	}
 
@@ -52,6 +53,7 @@ namespace move_simulation {
 
 	void Scene::add_object(const SceneObjectPtr new_object)
 	{
+		logger() << Logger::Info << "Add object to scene (" << new_object->pos() << ")" << std::endl;
 		m_objects.push_back(new_object);
 	}
 

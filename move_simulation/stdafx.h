@@ -16,8 +16,12 @@
 #include <memory>
 #include <vector>
 #include <sstream>
+#include <fstream>
 
 #include <iomanip>
 #include <chrono>
 
+#include "cmdline.h"
+
 #include "types.h"
+#include "Logger.h"
