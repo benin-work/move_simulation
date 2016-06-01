@@ -4,6 +4,8 @@
 
 namespace move_simulation {
 
+	using namespace simulation;
+
 	Scene::Scene()
 	{
 	}

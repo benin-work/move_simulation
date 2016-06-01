@@ -1,9 +1,9 @@
 #pragma once
-#include "ISimulator.h"
+#include "../include/ISimulator.h"
 
 namespace phys_simulator_lib {
 
-	class PhysSimulator :public move_simulation::ISimulator
+	class PhysSimulator :public simulation::ISimulator
 	{
 	public:
 		PhysSimulator();
@@ -12,7 +12,7 @@ namespace phys_simulator_lib {
 		void simulate(const ObjectsList& objects, const double dt) override;
 	};
 
-	extern "C" inline __declspec(dllexport) move_simulation::ISimulator* __cdecl create_simulator()
+	extern "C" inline __declspec(dllexport) simulation::ISimulator* __cdecl create_simulator()
 	{
 		return new PhysSimulator();
 	}

@@ -2,6 +2,8 @@
 
 namespace move_simulation {
 
+	using namespace simulation;
+
 	class GraphSceneObject;
 
 	class Scene

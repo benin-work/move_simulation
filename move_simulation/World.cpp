@@ -1,16 +1,18 @@
 #include "stdafx.h"
+#include "../include/ISimulator.h"
+#include "../include/PhysObject.h"
 #include "World.h"
 #include "Scene.h"
-#include "../phys_simulator_lib/ISimulator.h"
-#include "PhysObject.h"
 #include "GraphSceneObject.h"
 
 namespace move_simulation {
 
+	using namespace simulation;
+
 	namespace
 	{
-		// A factory of IKlass-implementing objects looks thus
-		typedef ISimulator* (__cdecl *isimulator_create)();
+		// A factory method
+		typedef ISimulator* (__cdecl* isimulator_create)();
 	}
 
 	World::World()

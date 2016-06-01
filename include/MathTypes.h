@@ -4,20 +4,20 @@
 namespace simple_math
 {
 	template< size_t M, typename T = double >
-	class Vector
+	class BaseVector
 	{
 	public:
 		typedef T value_type;
 
 	public:
-		Vector() : data() {}
+		BaseVector() : data() {}
 
 		// Set all components to e
-		explicit Vector(const T& e);
-		Vector(const T& x, const T& y);
+		explicit BaseVector(const T& e);
+		BaseVector(const T& x, const T& y);
 
-		Vector& operator=(const Vector& other);
-		Vector& operator=(const T& e);
+		BaseVector& operator=(const BaseVector& other);
+		BaseVector& operator=(const T& e);
 
 		T& operator[](size_t index);
 		const T& operator[](size_t index) const;
@@ -31,31 +31,31 @@ namespace simple_math
 		const T& x() const;
 		const T& y() const;
 
-		bool operator==(const Vector& other) const;
-		bool operator!=(const Vector& other) const;
+		bool operator==(const BaseVector& other) const;
+		bool operator!=(const BaseVector& other) const;
 
 		// Scalar operations
-		Vector operator*(const Vector& other) const;
-		Vector operator/(const Vector& other) const;
-		Vector operator+(const Vector& other) const;
-		Vector operator-(const Vector& other) const;
+		BaseVector operator*(const BaseVector& other) const;
+		BaseVector operator/(const BaseVector& other) const;
+		BaseVector operator+(const BaseVector& other) const;
+		BaseVector operator-(const BaseVector& other) const;
 
-		void operator*=(const Vector& other);
-		void operator/=(const Vector& other);
-		void operator+=(const Vector& other);
-		void operator-=(const Vector& other);
+		void operator*=(const BaseVector& other);
+		void operator/=(const BaseVector& other);
+		void operator+=(const BaseVector& other);
+		void operator-=(const BaseVector& other);
 
-		Vector operator*(const T other) const;
-		Vector operator/(const T other) const;
-		Vector operator+(const T other) const;
-		Vector operator-(const T other) const;
+		BaseVector operator*(const T other) const;
+		BaseVector operator/(const T other) const;
+		BaseVector operator+(const T other) const;
+		BaseVector operator-(const T other) const;
 
 		void operator*=(const T other);
 		void operator/=(const T other);
 		void operator+=(const T other);
 		void operator-=(const T other);
 
-		friend std::ostream& operator<< (std::ostream& os, const Vector& vector)
+		friend std::ostream& operator<< (std::ostream& os, const BaseVector& vector)
 		{
 			const std::ios::fmtflags flags = os.flags();
 			const std::streamsize prec = os.precision();
@@ -75,22 +75,22 @@ namespace simple_math
 	};
 
 	template <size_t M, typename T>
-	Vector<M, T>::Vector(const T& e)
+	BaseVector<M, T>::BaseVector(const T& e)
 	{
 		for (T& component: data)
 			component = e;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T>::Vector(const T& x, const T& y)
+	BaseVector<M, T>::BaseVector(const T& x, const T& y)
 	{
-		static_assert(M == 2, "Vector size construction error.");
+		static_assert(M == 2, "BaseVector size construction error.");
 		data[0] = x;
 		data[1] = y;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T>& Vector<M, T>::operator=(const Vector& other)
+	BaseVector<M, T>& BaseVector<M, T>::operator=(const BaseVector& other)
 	{
 		if (this != &other)
 			memcpy(data, other.data, M * sizeof(T));
@@ -98,7 +98,7 @@ namespace simple_math
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T>& Vector<M, T>::operator=(const T& e)
+	BaseVector<M, T>& BaseVector<M, T>::operator=(const T& e)
 	{
 		for (T& component : data)
 			component = e;
@@ -106,19 +106,19 @@ namespace simple_math
 	}
 
 	template <size_t M, typename T>
-	T& Vector<M, T>::operator[](size_t index)
+	T& BaseVector<M, T>::operator[](size_t index)
 	{
 		return at(index);
 	}
 
 	template <size_t M, typename T>
-	const T& Vector<M, T>::operator[](size_t index) const
+	const T& BaseVector<M, T>::operator[](size_t index) const
 	{
 		return at(index);
 	}
 
 	template <size_t M, typename T>
-	T& Vector<M, T>::at(size_t index)
+	T& BaseVector<M, T>::at(size_t index)
 	{
 		if (index >= M)
 		{
@@ -128,7 +128,7 @@ namespace simple_math
 	}
 
 	template <size_t M, typename T>
-	const T& Vector<M, T>::at(size_t index) const
+	const T& BaseVector<M, T>::at(size_t index) const
 	{
 		if (index >= M)
 		{
@@ -138,166 +138,166 @@ namespace simple_math
 	}
 
 	template <size_t M, typename T>
-	T& Vector<M, T>::x()
+	T& BaseVector<M, T>::x()
 	{
 		return data[0];
 	}
 
 	template <size_t M, typename T>
-	T& Vector<M, T>::y()
+	T& BaseVector<M, T>::y()
 	{
-		static_assert(M > 1, "Vector size should be > 1");
+		static_assert(M > 1, "BaseVector size should be > 1");
 		return data[1];
 	}
 
 	template <size_t M, typename T>
-	const T& Vector<M, T>::x() const
+	const T& BaseVector<M, T>::x() const
 	{
 		return data[0];
 	}
 
 	template <size_t M, typename T>
-	const T& Vector<M, T>::y() const
+	const T& BaseVector<M, T>::y() const
 	{
-		static_assert(M > 1, "Vector size should be > 1");
+		static_assert(M > 1, "BaseVector size should be > 1");
 		return data[1];
 	}
 
 	template <size_t M, typename T>
-	bool Vector<M, T>::operator==(const Vector& other) const
+	bool BaseVector<M, T>::operator==(const BaseVector& other) const
 	{
 		return memcmp(data, other.data, sizeof(data)) == 0;
 	}
 
 	template <size_t M, typename T>
-	bool Vector<M, T>::operator!=(const Vector& other) const
+	bool BaseVector<M, T>::operator!=(const BaseVector& other) const
 	{
 		return !this->operator==(other);
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator*(const Vector& other) const
+	BaseVector<M, T> BaseVector<M, T>::operator*(const BaseVector& other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) * other.at(index);
 		return res;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator/(const Vector& other) const
+	BaseVector<M, T> BaseVector<M, T>::operator/(const BaseVector& other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) / other.at(index);
 		return res;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator-(const Vector& other) const
+	BaseVector<M, T> BaseVector<M, T>::operator-(const BaseVector& other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) - other.at(index);
 		return res;
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator*=(const Vector& other)
+	void BaseVector<M, T>::operator*=(const BaseVector& other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) *= other.at(index);
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator/=(const Vector& other)
+	void BaseVector<M, T>::operator/=(const BaseVector& other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) /= other.at(index);
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator+=(const Vector& other)
+	void BaseVector<M, T>::operator+=(const BaseVector& other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) += other.at(index);
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator-=(const Vector& other)
+	void BaseVector<M, T>::operator-=(const BaseVector& other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) -= other.at(index);
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator*(const T other) const
+	BaseVector<M, T> BaseVector<M, T>::operator*(const T other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) * other;
 		return res;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator/(const T other) const
+	BaseVector<M, T> BaseVector<M, T>::operator/(const T other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) / other;
 		return res;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator+(const T other) const
+	BaseVector<M, T> BaseVector<M, T>::operator+(const T other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) + other;
 		return res;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator-(const T other) const
+	BaseVector<M, T> BaseVector<M, T>::operator-(const T other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) - other;
 		return res;
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator*=(const T other)
+	void BaseVector<M, T>::operator*=(const T other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) *= other;
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator/=(const T other)
+	void BaseVector<M, T>::operator/=(const T other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) /= other;
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator+=(const T other)
+	void BaseVector<M, T>::operator+=(const T other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) += other;
 	}
 
 	template <size_t M, typename T>
-	void Vector<M, T>::operator-=(const T other)
+	void BaseVector<M, T>::operator-=(const T other)
 	{
 		for (size_t index = 0; index < M; ++index)
 			at(index) -= other;
 	}
 
 	template <size_t M, typename T>
-	Vector<M, T> Vector<M, T>::operator+(const Vector& other) const
+	BaseVector<M, T> BaseVector<M, T>::operator+(const BaseVector& other) const
 	{
-		Vector< M, T > res;
+		BaseVector< M, T > res;
 		for (size_t index = 0; index < M; ++index)
 			res.at(index) = at(index) + other.at(index);
 		return res;

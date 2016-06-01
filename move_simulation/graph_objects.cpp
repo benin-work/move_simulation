@@ -3,20 +3,23 @@
 
 namespace move_simulation {
 
-	BallSceneObject::BallSceneObject(const Vector& pos /* = Vector(0)*/)
+	using namespace simulation;
+
+	BallSceneObject::BallSceneObject(const simulation::Vector& pos)
 		: GraphSceneObject(pos)
 	{
+		m_color = RGB(255, 0, 0);
 	}
 
 	void BallSceneObject::draw(HDC hdc)	const
 	{
-		HPEN obj_pen = (HPEN)CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
+		HPEN obj_pen = (HPEN)CreatePen(PS_SOLID, 2, color());
 		HPEN old_pen = (HPEN)SelectObject(hdc, obj_pen);
-		
-		HBRUSH obj_brush = (HBRUSH)CreateSolidBrush(RGB(255, 0, 0));
+
+		HBRUSH obj_brush = (HBRUSH)CreateSolidBrush(color());
 		HBRUSH old_brush = (HBRUSH)SelectObject(hdc, obj_brush);
 
-		const double rad = 15.0;
+		const double rad = mass() * 5.0;
 		Ellipse(hdc, 
 			static_cast<int>(pos().x() - rad), 
 			static_cast<int>(pos().y() - rad),
@@ -39,4 +42,31 @@ namespace move_simulation {
 		DeleteObject(obj_brush);
 	}
 
+	BoxSceneObject::BoxSceneObject(const simulation::Vector& pos)
+		: GraphSceneObject(pos)
+	{
+		m_color = RGB(0, 0, 255);
+	}
+
+	void BoxSceneObject::draw(HDC hdc) const
+	{
+		HPEN obj_pen = (HPEN)CreatePen(PS_SOLID, 2, color());
+		HPEN old_pen = (HPEN)SelectObject(hdc, obj_pen);
+
+		HBRUSH obj_brush = (HBRUSH)CreateSolidBrush(color());
+		HBRUSH old_brush = (HBRUSH)SelectObject(hdc, obj_brush);
+
+		const double rad = mass() * 5.0;
+		Rectangle(hdc,
+			static_cast<int>(pos().x() - rad),
+			static_cast<int>(pos().y() - rad),
+			static_cast<int>(pos().x() + rad),
+			static_cast<int>(pos().y() + rad));		
+
+		SelectObject(hdc, old_pen);
+		SelectObject(hdc, old_brush);
+
+		DeleteObject(obj_pen);
+		DeleteObject(obj_brush);
+	}
 } // namespace move_simulation

@@ -6,11 +6,12 @@
 #include <vector>
 #include <list>
 #include <fstream>
+#include <random>
 
 #include <iomanip>
 #include <chrono>
 
 #include "cmdline.h"
 
-#include "types.h"
+#include "../include/types.h"
 #include "Logger.h"

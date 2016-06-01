@@ -1,10 +1,14 @@
 #pragma once
 
+namespace simulation
+{
+	class ISimulator;
+}
+
 namespace move_simulation {
 
-	class Scene;
-	class ISimulator;
-
+	class Scene;	
+	
 	class World
 	{
 	public:
@@ -24,7 +28,7 @@ namespace move_simulation {
 
 	private:
 		SceneList m_scenes;
-		ISimulator* m_simulator;
+		simulation::ISimulator* m_simulator;
 
 		TimePoint m_prev_time;
 	};

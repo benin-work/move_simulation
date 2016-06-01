@@ -1,6 +1,6 @@
 #pragma once
 
-namespace move_simulation {
+namespace simulation {
 	class PhysObject;
 
 	class ISimulator
@@ -18,4 +18,4 @@ namespace move_simulation {
 		virtual void simulate(const ObjectsList& objects, const double dt) = 0;
 	};
 
-} // namespace move_simulation
+} // namespace simulation

@@ -220,6 +220,7 @@ namespace move_simulation {
 			return 0L;
 
 		case WM_LBUTTONDOWN:
+		case WM_RBUTTONDOWN:
 		{
 			logger() << Logger::Info << "Mouse left button down (" << LOWORD(lparam)
 				<< ',' << HIWORD(lparam) << ")" << std::endl;
@@ -229,12 +230,16 @@ namespace move_simulation {
 				RECT pos{ LOWORD(lparam), HIWORD(lparam) };
 				PointToModel(hwnd, pos);
 
-				m_active_object = std::make_shared<BallSceneObject>(Vector(pos.left, pos.top));
+				if (msg == WM_LBUTTONDOWN)
+					m_active_object = std::make_shared<BallSceneObject>(Vector(pos.left, pos.top));
+				else
+					m_active_object = std::make_shared<BoxSceneObject>(Vector(pos.left, pos.top));
 			}
 
 			break;
 		}
 		case WM_LBUTTONUP:
+		case WM_RBUTTONUP:
 		{
 			logger() << Logger::Info << "Mouse left button up (" << LOWORD(lparam)
 				<< ',' << HIWORD(lparam) << ")" << std::endl;	
