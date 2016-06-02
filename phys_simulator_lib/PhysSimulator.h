@@ -7,14 +7,13 @@ namespace phys_simulator_lib {
 	{
 	public:
 		PhysSimulator();
+		~PhysSimulator() override;
+		
 		void destroy() override;
 
 		void simulate(const ObjectsList& objects, const double dt) override;
 	};
 
-	extern "C" inline __declspec(dllexport) simulation::ISimulator* __cdecl create_simulator()
-	{
-		return new PhysSimulator();
-	}
+	extern "C" inline __declspec(dllexport) simulation::ISimulator* __cdecl create();
 
 } // namespace phys_simulator_lib

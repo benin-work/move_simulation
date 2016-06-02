@@ -22,13 +22,13 @@ namespace move_simulation {
 		~World();
 
 		void add_scene(const std::shared_ptr<Scene> scene);
-		void init();
+		void init(std::shared_ptr<simulation::ISimulator> simulator);
 		
 		void update();
 
 	private:
 		SceneList m_scenes;
-		simulation::ISimulator* m_simulator;
+		std::shared_ptr<simulation::ISimulator> m_simulator;
 
 		TimePoint m_prev_time;
 	};

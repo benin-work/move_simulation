@@ -7,6 +7,7 @@
 #include <list>
 #include <fstream>
 #include <random>
+#include <functional>
 
 #include <iomanip>
 #include <chrono>

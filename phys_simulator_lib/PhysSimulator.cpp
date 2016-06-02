@@ -9,6 +9,10 @@ namespace phys_simulator_lib {
 	{
 	}
 
+	PhysSimulator::~PhysSimulator()
+	{
+	}
+
 	void PhysSimulator::destroy()
 	{
 		delete this;
@@ -25,4 +29,8 @@ namespace phys_simulator_lib {
 		}
 	}
 
+	simulation::ISimulator* create()
+	{
+		return new PhysSimulator();
+	}
 } // namespace phys_simulator_lib

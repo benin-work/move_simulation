@@ -75,7 +75,4 @@
       <Filter>app</Filter>
     </ClCompile>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="test_move_simulation.cmd" />
-  </ItemGroup>
 </Project>

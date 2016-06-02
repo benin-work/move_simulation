@@ -7,15 +7,22 @@
 #include "SceneWindow.h"
 #include "World.h"
 #include "graph_objects.h"
+#include "../include/ISimulator.h"
 
 using namespace move_simulation;
 
 cmdline::parser g_cmd_parser;
+const TCHAR* g_library_name =
+#ifdef _DEBUG
+	TEXT("phys_simulator_lib_d.dll");
+#else
+	TEXT("phys_simulator_lib.dll");
+#endif
 
 void init_cmd_params(int argc, char *argv[]);
 void init_logger();
 
-std::shared_ptr<World> create_world();
+std::unique_ptr<World> create_world();
 std::shared_ptr<Scene> create_scene();
 
 int main(int argc, char *argv[])
@@ -28,7 +35,7 @@ int main(int argc, char *argv[])
 
 	// Initialize World with scene system
 	auto main_scene = create_scene();
-	auto world = create_world();
+	auto && world = create_world();
 	world->add_scene(main_scene);	
 
 	logger() << Logger::Info << "Create Scene window" << std::endl;
@@ -99,12 +106,40 @@ void init_logger()
 	logger().init(Logger::Info, log_stream, log_owner);
 }
 
-std::shared_ptr<World> create_world()
+std::unique_ptr<World> create_world()
 {
 	logger() << Logger::Info << "Create World" << std::endl;
-	auto world = std::make_shared<World>();
-	world->init();
+	auto world = std::make_unique<World>();
+
+	logger() << Logger::Info << "Loading Simulation DLL" << std::endl;
 	
+
+	// Loading simulation library
+	HMODULE simulation_lib  = LoadLibrary(g_library_name);
+	if (!simulation_lib) {
+		logger() << Logger::Error << "Unable to load Simulation DLL!" << std::endl;
+		return world;
+	}
+
+	FARPROC proc_addr = GetProcAddress(simulation_lib, "create");
+	if (!proc_addr)
+	{
+		logger() << Logger::Error << "Unable to find simulation factory method!" << std::endl;
+		return world;
+	}
+	
+	auto factory_func = reinterpret_cast<decltype(&simulation::create)>(proc_addr);
+	if (!factory_func)
+	{
+		logger() << Logger::Error << "Factory method doesnt correspond DLL API!" << std::endl;
+		::FreeLibrary(simulation_lib);
+		return world;
+	}
+
+	std::shared_ptr<ISimulator> simulator(factory_func(), std::mem_fn(&ISimulator::destroy));
+
+	world->init(simulator);
+
 	return world;
 }
 
