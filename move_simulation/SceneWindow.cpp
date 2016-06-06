@@ -6,8 +6,14 @@
 
 namespace move_simulation {
 
+	// Update display information each <g_update_info_time> seconds
+	const double g_update_info_time = 0.1;
+
 	SceneWindow::SceneWindow()
 		: m_hwnd(nullptr)
+		, m_prev_time(std::chrono::high_resolution_clock::now())
+		, m_update_duration(0)
+		, m_update_show_time(0)
 	{
 	}
 
@@ -80,6 +86,11 @@ namespace move_simulation {
 
 	void SceneWindow::draw() const
 	{
+		using namespace std::chrono;
+		auto now_time = high_resolution_clock::now();
+		m_update_duration = duration_cast<duration<double>>(now_time - m_prev_time).count();
+		m_prev_time = now_time;
+
 		RECT client_rect;
 		GetClientRect(hwnd(), &client_rect);
 		int win_width = client_rect.right - client_rect.left;
@@ -120,9 +131,27 @@ namespace move_simulation {
 		
 		if (m_scene)
 		{
-			std::wstringstream ss;
-			ss << TEXT("Scene objects: ") << m_scene->objects().size();
-			TextOut(hdc, 0, 0, ss.str().c_str(), ss.str().size());
+			m_update_show_time += m_update_duration;
+			if (m_update_show_time > g_update_info_time)
+			{
+				m_update_show_time = 0;
+				m_sys_info.str(std::wstring());
+				m_sys_info.clear();
+				m_sys_info << TEXT("Scene objects: ") << m_scene->objects().size() << std::endl;
+				m_sys_info << TEXT("Update time,s [FPS]: ") << m_update_duration
+					<< TEXT(" [") << (int)(m_update_duration > 0 ? 1.0 / m_update_duration : 0) << "]";
+			}
+
+			std::wstring store_info(m_sys_info.str());
+			std::wstring str_line;
+			size_t line = 0;
+			while (std::getline(m_sys_info, str_line)) 
+				TextOut(hdc, 0, line++*20, str_line.c_str(), str_line.size());
+			
+			m_sys_info.clear();
+			m_sys_info.str(store_info);
+
+
 		}
 
 		RestoreDC(hdc, saved_dc);

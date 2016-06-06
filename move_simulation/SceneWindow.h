@@ -33,6 +33,12 @@ namespace move_simulation {
 		std::shared_ptr<Scene> m_scene;
 
 		std::shared_ptr<GraphSceneObject> m_active_object;
+
+		// Scene window sys_info
+		mutable simulation::TimePoint m_prev_time;
+		mutable double m_update_duration;
+		mutable double m_update_show_time;
+		mutable std::wstringstream m_sys_info;
 	};
 
 } // namespace move_simulation
