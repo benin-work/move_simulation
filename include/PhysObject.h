@@ -26,11 +26,13 @@ namespace simulation {
 
 		const Vector& pos() const
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			return m_pos;
 		}
 
 		void set_pos(const Vector& new_pos)
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			m_pos = new_pos;
 		}
 
@@ -46,21 +48,25 @@ namespace simulation {
 
 		const Vector& vel() const
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			return m_vel;
 		}
 
 		void set_vel(const Vector& new_vel)
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			m_vel = new_vel;
 		}
 
 		const Vector& accel() const
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			return m_accel;
 		}
 
 		void set_accel(const Vector& new_accel)
 		{
+			std::lock_guard<std::mutex> access_lock(m_mut);
 			m_accel = new_accel;
 		}
 
@@ -70,6 +76,8 @@ namespace simulation {
 		double m_mass;
 		Vector m_vel;
 		Vector m_accel;
+
+		mutable std::mutex m_mut;
 	};
 
 } // namespace simulation

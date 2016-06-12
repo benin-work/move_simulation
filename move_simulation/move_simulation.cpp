@@ -44,8 +44,9 @@ int main(int argc, char *argv[])
 	scene_window.set_scene(main_scene);
 	scene_window.show();
 
+	world->run();
+
 	logger() << Logger::Info << "Enter message loop" << std::endl;
-	
 	MSG msg;
 	while (1) 
 	{
@@ -59,10 +60,11 @@ int main(int argc, char *argv[])
 		}
 		else
 		{
-			world->update();
 			scene_window.draw();
 		}
 	}
+
+	world->stop();
 
 	return static_cast<int>(msg.wParam);
 }

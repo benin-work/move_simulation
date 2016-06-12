@@ -150,8 +150,6 @@ namespace move_simulation {
 			
 			m_sys_info.clear();
 			m_sys_info.str(store_info);
-
-
 		}
 
 		RestoreDC(hdc, saved_dc);
@@ -259,10 +257,10 @@ namespace move_simulation {
 				RECT pos{ LOWORD(lparam), HIWORD(lparam) };
 				PointToModel(hwnd, pos);
 
-				if (msg == WM_LBUTTONDOWN)
+				/*if (msg == WM_LBUTTONDOWN)
 					m_active_object = std::make_shared<BallSceneObject>(Vector(pos.left, pos.top));
 				else
-					m_active_object = std::make_shared<BoxSceneObject>(Vector(pos.left, pos.top));
+					m_active_object = std::make_shared<BoxSceneObject>(Vector(pos.left, pos.top));*/
 			}
 
 			break;

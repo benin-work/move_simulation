@@ -21,27 +21,6 @@ namespace move_simulation {
 		m_bound_bottom_right = bottom_down;
 	}
 
-	void Scene::update(const double dt)
-	{
-		if (m_bound_top_left != m_bound_bottom_right)
-		{
-			// Simple test for bounds
-			for (auto it = m_objects.begin(); it != m_objects.end();)
-			{
-				const auto& obj = *it;
-				if (obj->pos().x() < m_bound_top_left.x() || obj->pos().x() > m_bound_bottom_right.x() || 
-					obj->pos().y() < m_bound_top_left.y() || obj->pos().y() > m_bound_bottom_right.y())
-				{
-					it = m_objects.erase(it);
-				}
-				else
-				{
-					++it;
-				}
-			}
-		}
-	}
-
 	void Scene::draw(HDC hdc)
 	{
 		// Draw objects
@@ -49,8 +28,6 @@ namespace move_simulation {
 		{
 			obj->draw(hdc);
 		}
-
-		draw_sysinfo(hdc);
 	}
 
 	void Scene::add_object(const SceneObjectPtr new_object)
@@ -61,7 +38,7 @@ namespace move_simulation {
 
 	void Scene::remove_object(const SceneObjectPtr object)
 	{
-
+		m_objects.erase(std::remove(m_objects.begin(), m_objects.end(), object));
 	}
 
 	Scene::ObjectsList& Scene::objects()
@@ -69,7 +46,4 @@ namespace move_simulation {
 		return m_objects;
 	}
 
-	void Scene::draw_sysinfo(HDC hdc)
-	{		 
-	}
 } //namespace move_simulation

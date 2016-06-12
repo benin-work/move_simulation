@@ -9,6 +9,7 @@ namespace move_simulation {
 	class Scene
 	{
 	public:
+		typedef GraphSceneObject SceneObject;
 		typedef std::shared_ptr<GraphSceneObject> SceneObjectPtr;
 		typedef std::vector<SceneObjectPtr> ObjectsList;
 
@@ -20,16 +21,12 @@ namespace move_simulation {
 		// Object will be removed if it left bounds
 		void set_bounds(Vector top_left, Vector bottom_down);
 
-		void update(const double dt);
 		void draw(HDC hdc);
 
 		void add_object(const SceneObjectPtr new_object);
 		void remove_object(const SceneObjectPtr object);
 
 		ObjectsList& objects();
-
-	private:
-		void draw_sysinfo(HDC hdc);
 
 	private:
 		ObjectsList m_objects;
